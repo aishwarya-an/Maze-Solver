@@ -27,22 +27,23 @@ Maze::Maze(int len, int width){
 			left = -1;
 		else if((num + 1) % len == 0)
 			right = -1;
-		if(up >= 0 && set->find_set(num) != set->find_set(up)){
+		int choose = rand() % 3;
+		if(choose == 0 && up >= 0 && set->find_set(num) != set->find_set(up)){
 			set->Union(num, up);
 			(*graph)[num].adjacent_vertices.push_back(up);
 			(*graph)[up].adjacent_vertices.push_back(num);
 		}
-		else if((down < (len * width)) && set->find_set(num) != set->find_set(down)){
+		else if(choose == 1 && (down < (len * width)) && set->find_set(num) != set->find_set(down)){
 			set->Union(num, down);
 			(*graph)[num].adjacent_vertices.push_back(down);
 			(*graph)[down].adjacent_vertices.push_back(num);
 		}
-		else if(left > 0 && set->find_set(num) != set->find_set(left)){
+		else if(choose == 2 && left > 0 && set->find_set(num) != set->find_set(left)){
 			set->Union(num, left);
 			(*graph)[num].adjacent_vertices.push_back(left);
 			(*graph)[left].adjacent_vertices.push_back(num);
 		}
-		else if(right > 0){
+		else if(choose == 3 && right > 0){
 			set->Union(num, right);
 			(*graph)[num].adjacent_vertices.push_back(right);
 			(*graph)[right].adjacent_vertices.push_back(num);
@@ -94,9 +95,47 @@ int Maze::get_breadth() const{
 	return breadth;
 }
 
+// This function takes in a vector and a number and returns whether the number is present in the vector or not.
+bool Maze::contains(vector<int> array, int element){
+	int i = 0;
+	while(i < array.size()){
+		if(array[i] == element)
+			return true;
+		++i;
+	}
+	return false;
+}
+
 // This function prints the maze.
 void Maze::print(){
-
+	cout << "      ";
+	int i = 1;
+	while(i < length){
+		cout << "____ ";
+		++i;
+	}
+	i = 0;
+	while(i < breadth){
+		int j = length * i;
+		while(j < length * (i+1)){
+			int left = j-1;
+			int right = j+1;
+			int down = j + length;
+			if(j == length * i && !contains((*graph)[j].adjacent_vertices, left))
+				cout << endl << "|";
+			if(j != (length*breadth -1) && !contains((*graph)[j].adjacent_vertices, down))
+				cout << "____";
+			else
+				cout << "    ";
+			if(!contains((*graph)[j].adjacent_vertices, right))
+				cout << "|";
+			else
+				cout << " ";
+			++j;
+		}
+		++i;
+	}
+	cout << endl;
 }
 
 // This function finds the shortest path from the entrance of the maze to the exit of the maze. It uses the shortest path 
@@ -105,7 +144,7 @@ void Maze::shortest_path(){
 
 }
 
-// This function prints the shortest path from the entrance of the maze to the exit of the maze. Te shortest path is stored in
+// This function prints the shortest path from the entrance of the maze to the exit of the maze. The shortest path is stored in
 // a private member.
 void Maze::print_path(){
 

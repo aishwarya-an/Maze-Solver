@@ -23,6 +23,7 @@ private:
 	Disjoint_set* set;
 	vector<node>* graph;
 	string path;
+	bool contains(vector<int>, int);
 public:
 	Maze(int, int);
 	Maze(const Maze&);
