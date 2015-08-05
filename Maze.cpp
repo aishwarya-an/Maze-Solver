@@ -1,19 +1,37 @@
 // This file contains the definitions of the functions of Maze class
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <climits>
 #include "Maze.h"
 
 using namespace std;
 
 // This is the constructor which takes in the length and the breadth of the maze to be constructed.
 Maze::Maze(int length, int breadth){
-
+	
 }
 
 // This is the copy constructor which takes another object and constructs a new object by copying the contents of the object 
 // taken as argument.
 Maze::Maze(const Maze &another_maze){
+	
+}
 
+// This function returns the disjoint set of the maze calling this function.
+const Disjoint_set* Maze::get_set() const{
+	return set;
+}
+
+// This function returns the vector containing the adjacency list of the nodes in the maze.
+const vector<node>* Maze::get_graph() const{
+	return graph;
+}
+
+// This function returns the string which is the shortest path from the entrance to the exit of the maze calling this function
+string Maze::get_path() const{
+	return path;
 }
 
 // This function prints the maze.
