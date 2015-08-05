@@ -147,12 +147,12 @@ void Maze::shortest_path(){
 // This function prints the shortest path from the entrance of the maze to the exit of the maze. The shortest path is stored in
 // a private member.
 void Maze::print_path(){
-
+	cout << "The correct answer from the entrance to the exit is : " << endl << path << endl;
 }
 
 // This function takes in a string and returns whether it is the shortest path from the entrance to the exit of the maze.
 bool Maze::is_correct(string answer){
-	return true;
+	return path == answer;
 }
 
 // This function first prints the maze for the user using the print() function. It then finds the shortest path using the 
