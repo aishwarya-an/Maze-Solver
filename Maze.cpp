@@ -10,13 +10,60 @@ using namespace std;
 
 // This is the constructor which takes in the length and the breadth of the maze to be constructed.
 Maze::Maze(int length, int breadth){
-	
+	srand(time(NULL));
+	if(length < 3)
+		length = 3;
+	if(breadth < 3)
+		breadth = 3;
+	set = new Disjoint_set(length * breadth);
+	graph = new vector<node>(length * breadth);
+	while(set->get_num_of_sets() != 1){
+		int num = rand() % (length * breadth);
+		int up = num - length;
+		int down = num + length;
+		int left = num - 1;
+		int right = num + 1;
+		if(num % length == 0)
+			left = -1;
+		else if((num + 1) % length == 0)
+			right = -1;
+		if(up >= 0 && set->find_set(num) != set->find_set(up)){
+			set->Union(num, up);
+			(*graph)[num].adjacent_vertices.push_back(up);
+			(*graph)[up].adjacent_vertices.push_back(num);
+		}
+		else if((down < (length * breadth)) && set->find_set(num) != set->find_set(down)){
+			set->Union(num, down);
+			(*graph)[num].adjacent_vertices.push_back(down);
+			(*graph)[down].adjacent_vertices.push_back(num);
+		}
+		else if(left > 0 && set->find_set(num) != set->find_set(left)){
+			set->Union(num, left);
+			(*graph)[num].adjacent_vertices.push_back(left);
+			(*graph)[left].adjacent_vertices.push_back(num);
+		}
+		else if(right > 0){
+			set->Union(num, right);
+			(*graph)[num].adjacent_vertices.push_back(right);
+			(*graph)[right].adjacent_vertices.push_back(num);
+		}
+	}
+	int i = 0;
+	while(i < graph->size()){
+		(*graph)[i].known = false;
+		(*graph)[i].distance = INT_MAX;
+		++i;
+	}
+	path = "";
+
 }
 
 // This is the copy constructor which takes another object and constructs a new object by copying the contents of the object 
 // taken as argument.
 Maze::Maze(const Maze &another_maze){
-	
+	set = new Disjoint_set(*another_maze.get_set());
+	graph = new vector<node>(*another_maze.get_graph());
+	path = another_maze.get_path();
 }
 
 // This function returns the disjoint set of the maze calling this function.
@@ -65,5 +112,6 @@ void Maze::run(){
 
 // This is the destructor which frees the memory dynamicaly allocated while constructing the object.
 Maze::~Maze(){
-
+	delete set;
+	delete graph;
 }
