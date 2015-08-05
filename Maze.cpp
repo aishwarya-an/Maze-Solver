@@ -8,31 +8,31 @@
 
 using namespace std;
 
-// This is the constructor which takes in the length and the breadth of the maze to be constructed.
-Maze::Maze(int length, int breadth){
+// This is the constructor which takes in the length and the width of the maze to be constructed.
+Maze::Maze(int len, int width){
 	srand(time(NULL));
-	if(length < 3)
-		length = 3;
-	if(breadth < 3)
-		breadth = 3;
-	set = new Disjoint_set(length * breadth);
-	graph = new vector<node>(length * breadth);
+	if(len < 3)
+		len = 3;
+	if(width < 3)
+		width = 3;
+	set = new Disjoint_set(len * width);
+	graph = new vector<node>(len * width);
 	while(set->get_num_of_sets() != 1){
-		int num = rand() % (length * breadth);
-		int up = num - length;
-		int down = num + length;
+		int num = rand() % (len * width);
+		int up = num - len;
+		int down = num + len;
 		int left = num - 1;
 		int right = num + 1;
-		if(num % length == 0)
+		if(num % len == 0)
 			left = -1;
-		else if((num + 1) % length == 0)
+		else if((num + 1) % len == 0)
 			right = -1;
 		if(up >= 0 && set->find_set(num) != set->find_set(up)){
 			set->Union(num, up);
 			(*graph)[num].adjacent_vertices.push_back(up);
 			(*graph)[up].adjacent_vertices.push_back(num);
 		}
-		else if((down < (length * breadth)) && set->find_set(num) != set->find_set(down)){
+		else if((down < (len * width)) && set->find_set(num) != set->find_set(down)){
 			set->Union(num, down);
 			(*graph)[num].adjacent_vertices.push_back(down);
 			(*graph)[down].adjacent_vertices.push_back(num);
@@ -55,7 +55,8 @@ Maze::Maze(int length, int breadth){
 		++i;
 	}
 	path = "";
-
+	length = len;
+	breadth = width;
 }
 
 // This is the copy constructor which takes another object and constructs a new object by copying the contents of the object 
@@ -64,6 +65,8 @@ Maze::Maze(const Maze &another_maze){
 	set = new Disjoint_set(*another_maze.get_set());
 	graph = new vector<node>(*another_maze.get_graph());
 	path = another_maze.get_path();
+	length = another_maze.get_length();
+	breadth = another_maze.get_breadth();
 }
 
 // This function returns the disjoint set of the maze calling this function.
@@ -79,6 +82,16 @@ const vector<node>* Maze::get_graph() const{
 // This function returns the string which is the shortest path from the entrance to the exit of the maze calling this function
 string Maze::get_path() const{
 	return path;
+}
+
+// This function returns the length of the maze.
+int Maze::get_length() const{
+	return length;
+}
+
+// This function returns the breadth of the maze.
+int Maze::get_breadth() const{
+	return breadth;
 }
 
 // This function prints the maze.
@@ -105,7 +118,7 @@ bool Maze::is_correct(string answer){
 
 // This function first prints the maze for the user using the print() function. It then finds the shortest path using the 
 // shortest_path() function. It then takes input of the answer(of the path) from the user and gives the correct answer incase of 
-// wrong answer from the user. Its running time is O(nm) where n and m are the length and the breadth of the maze respectively. 
+// wrong answer from the user. Its running time is O(nm) where n and m are the length and the width of the maze respectively. 
 void Maze::run(){
 
 }

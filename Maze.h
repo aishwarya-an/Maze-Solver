@@ -18,6 +18,8 @@ struct node{
 
 class Maze{
 private:
+	int length;
+	int breadth;
 	Disjoint_set* set;
 	vector<node>* graph;
 	string path;
@@ -27,6 +29,8 @@ public:
 	const Disjoint_set* get_set() const;
 	const vector<node>* get_graph() const;
 	string get_path() const;
+	int get_length() const;
+	int get_breadth() const;
 	void print();
 	void shortest_path();
 	void print_path();
