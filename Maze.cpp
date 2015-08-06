@@ -11,10 +11,10 @@ using namespace std;
 // This is the constructor which takes in the length and the width of the maze to be constructed.
 Maze::Maze(int len, int width){
 	srand(time(NULL));
-	if(len < 3)
-		len = 3;
-	if(width < 3)
-		width = 3;
+	if(len < 5)
+		len = 5;
+	if(width < 5)
+		width = 5;
 	set = new Disjoint_set(len * width);
 	graph = new vector<node>(len * width);
 	while(set->get_num_of_sets() != 1){
@@ -159,7 +159,21 @@ bool Maze::is_correct(string answer){
 // shortest_path() function. It then takes input of the answer(of the path) from the user and gives the correct answer incase of 
 // wrong answer from the user. Its running time is O(nm) where n and m are the length and the width of the maze respectively. 
 void Maze::run(){
-
+	print();
+	shortest_path();
+	cout << endl << "You need to find the shortest path from the entrance of the maze(i.e the top left corner) to the exit"
+	<< "(i.e the right bottom corner). The path should be given in terms of N, S, W and E where N represents moving from "
+	<< "the current cell to the above cell, S represents moving from the current cell to the below cell, E represents moving "
+	<< "from the current cell to the right cell and W represents moving from the current cell to the left cell. Please give the "
+	<< "answer : " << endl;
+	string answer;
+	cin >> answer;
+	if(is_correct(answer))
+		cout << "Congratulations !!! You have given the right answer...." << endl;
+	else{
+		cout << "Sorry...You have given the wrong answer..." << endl;
+		print_path();
+	}
 }
 
 // This is the destructor which frees the memory dynamicaly allocated while constructing the object.
