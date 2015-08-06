@@ -12,7 +12,6 @@ struct cell{
 	int index;
 	int rank;
 	int representative;
-	vector<int> neighbours;
 };
 
 class Disjoint_set{

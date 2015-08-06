@@ -11,7 +11,6 @@ using namespace std;
 
 struct node{
 	vector<int> adjacent_vertices;
-	bool known;
 	int distance;
 	int path;
 };
