@@ -228,10 +228,11 @@ void Maze::run(){
 	print();
 	shortest_path();
 	cout << endl << "You need to find the shortest path from the entrance of the maze(i.e the top left corner) to the exit"
-	<< "(i.e the right bottom corner). The path should be given in terms of N, S, W and E where N represents moving from "
+	<< "(i.e the right bottom corner)." << endl 
+	<< "The path should be given in terms of N, S, W and E where N represents moving from "
 	<< "the current cell to the above cell, S represents moving from the current cell to the below cell, E represents moving "
-	<< "from the current cell to the right cell and W represents moving from the current cell to the left cell. Please give the "
-	<< "answer : " << endl;
+	<< "from the current cell to the right cell and W represents moving from the current cell to the left cell. "
+	<< endl << "Please give the answer : " << endl;
 	string answer;
 	cin >> answer;
 	if(is_correct(answer))
